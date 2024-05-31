@@ -29,22 +29,94 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\nДобро пожаловать в викторину!\n");                       // приветствие и ввод пользователем "имени"
-            Console.Write("Пожалуйста, введите ваш никнейм: ");
+            Console.Clear();
+
+            while (true)
+            {
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Welcome to the quiz!".PadLeft(75));     // welcome 
+                Console.ResetColor();
+
+                bool showMenu = true;
+
+                while (showMenu)
+                {
+                    DisplayMenu();
+
+                    var key = Console.ReadKey(true).Key;
+
+                    if (key == ConsoleKey.G)
+                    {
+                        StartQuiz();
+                        break;
+                    }
+                    else if (key == ConsoleKey.S)
+                    {
+                        DisplayScoreboard();
+                        break;
+                    }
+                    else if (key == ConsoleKey.E)
+                    {
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nChybné zadávání. Stiskněte <G>, <S> nebo <E>.");
+                        Console.ResetColor();
+                        continue;
+                    }
+                }
+            }
+        }
+        static void DisplayMenu()
+        {
+            Console.WriteLine("\nStiskněte <G> pro spuštění hry.");
+            Console.WriteLine("\nStiskněte <S> pro zobrazení tabulky bodů (XML).");            // MeNu O_o
+            Console.WriteLine("\nStiskněte <E> pro ukončení aplikace.");
+        }
+        static void StartQuiz()                 // метод инициализации "начать игру"
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("\nZadejte prosím svou přezdívku: ");                           // ввод пользователем "имени"
+            Console.ResetColor();
             string playerName = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine($"\nПривет, {playerName}! Давай же начнем викторину!");
-
+            
 
             QuizQuestion[] questions = ReadFromFile("questions.txt");              // считывание вопросов+вариантов+ответов из .txt, сохранение в массив questions
+            if(questions.Length == 0 || questions == null)                          //  "|" оба       "||" 1 потом 2
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\nNepodařilo se načíst otázky z <questions.txt> !!!\n");
+                Console.WriteLine($"Zkontrolujte, že soubor existuje a není prázdný.\n");           // проверка на "пустоту" файла
+                Console.ResetColor();
+                Console.WriteLine("Stiskněte <E> pro ukončení aplikace.");
+                while (Console.ReadKey(true).Key != ConsoleKey.E)
+                {
+                    Console.WriteLine("\nStiskněte <E> pro ukončení aplikace.");                   // Повторное сообщение, если нажата другая клавиша
+                }
+                Environment.Exit(0);
+            }
+
             int score = 0;
             int questionNumber = 1;
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;                                      // приветствие игрока по нику перед 1м вопросом.
+            Console.Write("\nAhoj, ");
+            Console.ResetColor();
+            Console.Write($"{playerName}");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("! Kvíz je spuštěn ! Good luck !\n");
+            Console.ResetColor();
 
             foreach (var question in questions)
             {
                 Console.WriteLine();
                 Console.WriteLine($"{questionNumber}. {question.QuestionText}\n");           // вывод номера + текста вопроса
-                foreach (var option in question.Options)           
+                foreach (var option in question.Options)
                 {
                     Console.WriteLine(option);                  // вывод вариантов
                 }
@@ -52,9 +124,11 @@
                 char selectedOption;
                 bool isValid = false;
 
-                do        // запрос на корректный формат ответа
+                do        
                 {
-                    Console.Write("\nВведите ваш ответ (a, b, c, d): ");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write("\nZadejte odpověď:");
+                    Console.ResetColor();                                                                   // запрос на корректный формат ответа
                     char input = Console.ReadKey().KeyChar;
                     Console.WriteLine();
                     selectedOption = char.ToUpper(input);
@@ -68,43 +142,76 @@
                             score++;
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine();
-                            Console.WriteLine("Верно!".PadLeft(30));
+                            Console.WriteLine("Správně!".PadLeft(30));
                             Console.ResetColor();
-                            Console.WriteLine("\nНажмите <Enter>, чтобы продолжить.");                        // if правильный вариант
+                            Console.WriteLine("\nPro pokračování stiskněte <Enter>.");                        // if правильный вариант
                             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
                         }
                         else
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine();
-                            Console.WriteLine("Неверно!".PadLeft(30));
+                            Console.WriteLine("Špatně!".PadLeft(30));
                             Console.ResetColor();                                                        //if неправильный вариант
-                            Console.WriteLine("\nНажмите <Enter>, чтобы продолжить.");
+                            Console.WriteLine("\nPro pokračování stiskněte <Enter>.");
                             while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
                         }
                     }
                     else
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\n\nНекорректный ввод. Пожалуйста, введите a, b, c или d.");     // все любый input кроме а б с д
+                        Console.WriteLine("\nChybné zadávání. Zadejte a, b, c nebo d.");     // все любый input кроме а б с д
                     }
                     Console.ResetColor();
 
                 } while (!isValid);
                 Console.Clear();
             }
-            
-            Console.WriteLine($"Игра окончена, {playerName}!\n");
-            Console.WriteLine($"Ваш результат: {score} из {questions.Length}");                       // Вывод результатов
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("\nKonec hry, ");
+            Console.ResetColor();
+            Console.Write($"{playerName}");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("!\n");
+
+            Console.Write($"\nTvůj výsledek:");
+            Console.ResetColor();
+            Console.Write($"{score}");                                                   // Вывод результатов
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($" z ");
+            Console.ResetColor();
+            Console.Write($"{questions.Length}\n");
+
             SaveScoreToXml(playerName, score);                                                        // вывод в xml
-            Console.WriteLine("\nНажмите <Enter>, чтобы закрыть приложение.");
-            while (Console.ReadKey(true).Key != ConsoleKey.Enter)
+            DisplayMenu();                                                  
+            
+            while (true)
             {
-                Console.WriteLine("\nПожалуйста! Нажмите <Enter>, чтобы закрыть приложение.");
+                var key = Console.ReadKey(true).Key;
+                if (key == ConsoleKey.E)
+                {
+                    Environment.Exit(0);
+                }
+                else if (key == ConsoleKey.S)
+                {
+                    DisplayScoreboard();
+                    break;
+                }
+                else if (key == ConsoleKey.G)
+                {
+                    StartQuiz();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nChybné zadávání. Stiskněte <G>, <S> nebo <E>.");
+                    Console.ResetColor();
+                    DisplayMenu();
+                }
             }
         }
-
-        private static QuizQuestion[] ReadFromFile(string fileName)            // метод вывода вопросов из .txt 
+        static QuizQuestion[] ReadFromFile(string fileName)            // метод вывода вопросов из .txt 
         {
             try
             {
@@ -129,44 +236,67 @@
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка чтения файла: {ex.Message}");            // взял это из лекции (выводит какое-то сообщение при ошибки считывания файла)
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\nNepodařilo se načíst otázky z <questions.txt> !!!\n");
+                Console.WriteLine($"Zkontrolujte, že soubor existuje a není prázdný.\n");           // проверка на "пустоту" файла
+                Console.ResetColor();
+                Console.WriteLine("Stiskněte <E> pro ukončení aplikace.");
+                while (Console.ReadKey(true).Key != ConsoleKey.E)
+                {
+                    Console.WriteLine("\nStiskněte <E> pro ukončení aplikace.");                   // Повторное сообщение, если нажата другая клавиша
+                }
+                Environment.Exit(0);           // взял это из лекции (выводит какое-то сообщение при ошибки считывания файла)
                 return null;
             }
         }
-        static void SaveScoreToXml(string playerName, int score)
+        static void SaveScoreToXml(string playerName, int score)            // метод сохранения score в XML 
         {
-
-            XDocument doc;
+            XDocument doc;                                          //объявление переменной doc xml
 
             if (File.Exists(@"scoreboard.xml"))
             {
-                doc = XDocument.Load(@"scoreboard.xml");
+                doc = XDocument.Load(@"scoreboard.xml");                // загрузка предыдущего контента (если файл существует)                               
             }
-            else doc = new XDocument(new XElement("Scoreboard"));
+            else doc = new XDocument(new XElement("Scoreboard"));       // создание файла scoreboard.xml (если файл отсутствует)
 
-            doc.Root.Add(new XElement("Player", new XElement("Nickname", playerName), new XElement("Score", score)));
-            doc.Save(@"scoreboard.xml");
+            doc.Root.Add(new XElement("Player", new XElement("Nickname", playerName), new XElement("Score", score)));           // добавление в коллекцию player 2 потомка (playerName и score)
+            doc.Save(@"scoreboard.xml");                                        // save    
         }
-
-    /* 
-
-            
-    XmlWriterSettings set = new XmlWriterSettings();
-        set.Indent = true; 
-
-        using (XmlWriter xw = XmlWriter.Create(@"scoreboard.xml", set))
+        static void DisplayScoreboard()                    // метод вывода таблицы результатов из scoreboard.xml
         {
-            xw.WriteStartDocument();
-            xw.WriteStartElement("Scoreboard");
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\nTabulka bodů\n");
+            Console.ResetColor();
 
-            xw.WriteStartElement("Player");
-            xw.WriteElementString("Nickname", playerName);
-            xw.WriteElementString("Score", score.ToString());
-            xw.WriteEndElement();
+            if (File.Exists(@"scoreboard.xml"))
+            {
+                XDocument doc = XDocument.Load(@"scoreboard.xml");          // загрузка файла scoreboard.xml
+                var players = doc.Descendants("Player");                //загрузка коллекции player 
 
-            xw.WriteEndElement();
-            xw.WriteEndDocument();
+                foreach (var player in players)
+                {
+                    string nickname = player.Element("Nickname").Value;      // инициализация значения nickname(playerName)
+                    string score = player.Element("Score").Value;           // инициализация значения score(score)
+                    Console.WriteLine($"{nickname}: {score} body");        // вывод nickname и score
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Nejsou k dispozici žádné výsledky k zobrazení.");              // проверка на отсутствие значений внутри файла
+                Console.ResetColor(); 
+            }
+
+            Console.WriteLine("\n\nStiskněte <Enter> pro návrat do menu.");
+
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nStiskněte <Enter> pro návrat do menu.");
+                Console.ResetColor();
+            }
+            Console.Clear();
         }
-    */
-}
+    }
 }
