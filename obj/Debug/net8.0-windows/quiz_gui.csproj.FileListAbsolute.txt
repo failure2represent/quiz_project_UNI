@@ -1,0 +1,17 @@
+E:\универ\C#\quiz_gui\bin\Debug\net8.0-windows\quiz_gui.exe
+E:\универ\C#\quiz_gui\bin\Debug\net8.0-windows\quiz_gui.deps.json
+E:\универ\C#\quiz_gui\bin\Debug\net8.0-windows\quiz_gui.runtimeconfig.json
+E:\универ\C#\quiz_gui\bin\Debug\net8.0-windows\quiz_gui.dll
+E:\универ\C#\quiz_gui\bin\Debug\net8.0-windows\quiz_gui.pdb
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.Form1.resources
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.Properties.Resources.resources
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.csproj.GenerateResource.cache
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.GeneratedMSBuildEditorConfig.editorconfig
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.AssemblyInfoInputs.cache
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.AssemblyInfo.cs
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.csproj.CoreCompileInputs.cache
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.dll
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\refint\quiz_gui.dll
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.pdb
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\quiz_gui.genruntimeconfig.cache
+E:\универ\C#\quiz_gui\obj\Debug\net8.0-windows\ref\quiz_gui.dll

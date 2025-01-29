@@ -1,4 +1,6 @@
-﻿namespace quiz_gui
+﻿using System.Windows.Forms;
+
+namespace quiz_gui
 {
     partial class Form1
     {
@@ -29,6 +31,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             startButton = new Button();
             scoreButton = new Button();
             exitButton = new Button();
@@ -101,10 +104,24 @@
             // 
             // sbGrid
             // 
-            sbGrid.BackgroundColor = SystemColors.Desktop;
+            sbGrid.AllowUserToAddRows = false;
+            sbGrid.AllowUserToResizeColumns = false;
+            sbGrid.AllowUserToResizeRows = false;
+            sbGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            sbGrid.BackgroundColor = SystemColors.Control;
             sbGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Tahoma", 8.25F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Window;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            sbGrid.DefaultCellStyle = dataGridViewCellStyle1;
             sbGrid.Location = new Point(262, 55);
             sbGrid.Name = "sbGrid";
+            sbGrid.ReadOnly = true;
+            sbGrid.RowHeadersVisible = false;
             sbGrid.Size = new Size(266, 284);
             sbGrid.TabIndex = 6;
             sbGrid.Visible = false;
