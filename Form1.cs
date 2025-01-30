@@ -16,8 +16,8 @@ namespace quiz_gui
             quizLogic = new QuizLogic();
             scoreLogic = new ScoreLogic();
 
-            if (sbGrid != null)
-            {
+            if (sbGrid != null)                                     //zakaz filtrování scoreboard (link ???)
+            {   
                 sbGrid.ColumnAdded += (s, e) => e.Column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
@@ -25,13 +25,12 @@ namespace quiz_gui
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            ResetGame();
-            ShowNicknameInput();
+            ResetGame();                
         }
 
-        private void usernameOkButton_Click(object sender, EventArgs e)
+        private void usernameOkButton_Click(object sender, EventArgs e)             //tlacitko pro kontrolu usernamu pred zacatkem     
         {
-            playerName = usernameTextBox.Text.Trim();
+            playerName = usernameTextBox.Text.Trim();                   
 
             if (string.IsNullOrWhiteSpace(playerName))
             {
@@ -44,7 +43,7 @@ namespace quiz_gui
             DisplayQuestion();
         }
 
-        private void nextQuButton_Click(object sender, EventArgs e)
+        private void nextQuButton_Click(object sender, EventArgs e)                 //tlacitko pro nacitani pristi otazky
         {
             if (quizLogic.HasQuestions())
             {
@@ -75,7 +74,7 @@ namespace quiz_gui
             }
         }
 
-        private void scoreButton_Click(object sender, EventArgs e)
+        private void scoreButton_Click(object sender, EventArgs e)              //score tlacitko
         {
             HideAllElements();
             sbGrid.Visible = true;
@@ -83,23 +82,23 @@ namespace quiz_gui
             DisplayScoreboard();
         }
 
-        private void exitButton_Click(object sender, EventArgs e)
+        private void exitButton_Click(object sender, EventArgs e)           //exit tlacitko
         {
             Application.Exit();
         }
 
-        private void btmButton_Click(object sender, EventArgs e)
+        private void btmButton_Click(object sender, EventArgs e)    // pro tlacitka navratu do menu
         {
             ResetQuiz();
             ShowMainMenu();
         }
 
-        private void DisplayScoreboard()
+        private void DisplayScoreboard()                 //zobrázení scoreboardu
         {
             scoreLogic.LoadScoreboard(sbGrid);
         }
 
-        private void DisplayQuestion()
+        private void DisplayQuestion()                      //zobrázení otazek
         {
             var currentQuestion = quizLogic.GetCurrentQuestion();
 
@@ -113,12 +112,12 @@ namespace quiz_gui
             }
         }
 
-        private void ResetQuiz()
+        private void ResetQuiz()                        //visability logika
         {
             HideAllElements();
             quizLogic.ResetQuiz();
-            usernameTextBox.Text = "";
-            playerName = "";
+            usernameTextBox.Text = "";                             
+            playerName = "";                                
         }
 
         private void ResetGame()
